@@ -1,6 +1,7 @@
 "use client"
 
 import { API_URL } from "@/utils/BackEndAPI";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface LoginProps{
@@ -9,6 +10,7 @@ interface LoginProps{
 }
 
 export default function Login() {
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
@@ -38,8 +40,10 @@ export default function Login() {
             });
 
             if(response.ok){
-                const data = await response.text();
-                console.log("Success",data);
+                const token = await response.text();
+                console.log("Success",token);
+                localStorage.setItem("token", token);
+                router.push("/homepage");
             }
             else{
                 const errorData = await response.json();
@@ -57,7 +61,7 @@ export default function Login() {
             <div className="border-3 border-black rounded-xl w-150 p-10">
 
                 <div className="flex justify-center mb-4">
-                    <p className="text-3xl">Register</p>
+                    <p className="text-3xl">Login</p>
                 </div>
                 
                 <div className="flex-row justify space-y-7">

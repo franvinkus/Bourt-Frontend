@@ -7,5 +7,6 @@ export const API_URL = {
     },
     PLACE:{
         GetAll: `${BASE_URL}/Place/get-place`,
+        GetDetail: (id: string) => `${BASE_URL}/Place/get-place/${id}`,
     },
 }

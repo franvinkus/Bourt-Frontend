@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Narbar from "../../Component/Navbar"
 import { API_URL } from "@/utils/BackEndAPI";
+import Link from "next/link";
 
 
 interface Place{
@@ -102,9 +103,10 @@ export default function Homepage(){
                         <div>
                             <div className="grid grid-cols-4 gap-8">
                                 {pagedData.datas.map((place) => (
-                                    <div
+                                    <Link
                                     key={place.placeId}
                                     className="border-2 rounded-lg p-4"
+                                    href={`place/${place.placeId}`}
                                     >
                                         <p className="text-2xl">{place.name}</p>
                                         <p className="text-md">{place.ownerName}</p>
@@ -119,7 +121,7 @@ export default function Homepage(){
                                         <p>{place.city}</p>
                                         <p>{place.address}</p>
                                         <p>{place.openHour} - {place.closeHour}</p>
-                                    </div>
+                                    </Link>
                                 ))}
                             </div>
                             
