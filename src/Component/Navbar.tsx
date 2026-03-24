@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 export default function Navbar(){
 
     const [isLogged, setIsLogged] = useState(false);
-    const [username, setUsername] = useState('');
+    const [username, setUserName] = useState('');
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         setIsLogged(isLoggedIn());
-        setUsername(getUserName());
+        setUserName(getUserName());
     }, []);
 
     const handleModal = () =>{
@@ -19,7 +19,7 @@ export default function Navbar(){
     }
 
     return(
-      <div className="bg-white hover:bg-gray-200">
+      <nav className="bg-white hover:bg-gray-200">
         <div className="flex flex-row justify-center items-center align-middle p-3 h-20">
             <div className="flex-1 flex pl-10">
                 <p className="text-3xl">Bourt</p>
@@ -61,12 +61,12 @@ export default function Navbar(){
             ) : (
                 <div className="flex-1 flex text-xl justify-end">
                     <span> Hello,  </span>
-                    <p 
+                    <button 
                     className="hover:cursor-pointer hover:text-blue-500"
                     onClick={() => handleModal()}
                     >
                         {username}
-                    </p>
+                    </button>
                     
                     {showModal && (
                         <button 
@@ -82,6 +82,6 @@ export default function Navbar(){
                 </div>
             )}
         </div>
-      </div>  
+      </nav>  
     );
 }
