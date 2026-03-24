@@ -49,3 +49,23 @@ export const getUserName = () =>{
         return null;
     }
 }
+
+export const getUserId = () =>{
+    const token = getToken();
+    if(!token) return null;
+
+    try{
+        const payloadBase64 = token.split('.')[1];
+
+        const decoedJson = atob(payloadBase64);
+        const payload = JSON.parse(decoedJson);
+
+        const userId = payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || payload.nameId;
+
+        return userId;
+    }
+    catch(error){
+        console.error("Gagal membaca token:", error);
+        return null;
+    }
+}
