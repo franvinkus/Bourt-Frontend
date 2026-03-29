@@ -9,4 +9,11 @@ export const API_URL = {
         GetAll: `${BASE_URL}/Place/get-place`,
         GetDetail: (id: string) => `${BASE_URL}/Place/get-place/${id}`,
     },
+    COURT:{
+        GetDetail: (id:string) => `${BASE_URL}/Court/get-court-details/${id}`,
+    },
+    BOOKING:{
+        InsertBooking: (id: string) => `${BASE_URL}/Booking/insert-booking/${id}`,
+        GetAvailableHours: (id: string) => `${BASE_URL}/Booking/booking-availability/${id}`,
+    },
 }

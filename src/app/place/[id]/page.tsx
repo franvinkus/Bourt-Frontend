@@ -76,7 +76,7 @@ export default function placeDetail({ params }: {params : Promise<Params>}){
     }
 
     useEffect(() => {
-            const searchTimeOut = setTimeout(() => {
+        const searchTimeOut = setTimeout(() => {
             fetchData(searchCourt, 1);
         }, 1000);
 
