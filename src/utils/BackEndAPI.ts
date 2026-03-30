@@ -13,6 +13,9 @@ export const API_URL = {
         GetDetail: (id:string) => `${BASE_URL}/Court/get-court-details/${id}`,
     },
     BOOKING:{
+        GetAdminBooking: `${BASE_URL}/Booking/get-all`,
+        GetOwnerBooking: `${BASE_URL}/Booking/get-owner-booking`,
+        GetCustomerBooking: `${BASE_URL}/Booking/get-customer-booking`,
         InsertBooking: (id: string) => `${BASE_URL}/Booking/insert-booking/${id}`,
         GetAvailableHours: (id: string) => `${BASE_URL}/Booking/booking-availability/${id}`,
     },
