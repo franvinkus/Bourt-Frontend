@@ -25,7 +25,7 @@ export default function Navbar(){
                 <p className="text-3xl">Bourt</p>
             </div>
 
-            <div className="flex justify-between items-center text-xl gap-15">
+            <div className="flex justify-between items-center text-xl gap-15 mr-10">
                 <a 
                 className="hover:cursor-pointer" 
                 href="../homepage"
@@ -35,9 +35,9 @@ export default function Navbar(){
                 
                 <a 
                 className="hover:cursor-pointer"
-                href={`${isLogged ? "" : "../login"}`}
+                href={`${isLogged ? "../myBooking" : "../login"}`}
                 >
-                    My Bookings
+                    My Booking
                 </a>
             </div>
 
