@@ -14,6 +14,7 @@ interface BaseBooking{
     date: Date,
     startTime: string,
     endTime: string,
+    status: string,
 }
 
 interface OwnerBooking extends BaseBooking {
@@ -48,6 +49,7 @@ export default function MyBooking(){
         datas: []
     });
     const [isMounted, setIsMounted] = useState(false);
+    const [searchInput, setSerachInput] = useState('');
 
     const fetchCustomerBookingData = async (stringInput: string, pageNumber: number) => {
         setIsLoading(true);
@@ -168,18 +170,18 @@ export default function MyBooking(){
 
         const searchTimeOut = setTimeout(() => {
             if(userRole === "Admin"){
-                fetchAdminBookings("", 1);
+                fetchAdminBookings(searchInput, 1);
             }
             else if (userRole === "Owner"){
-                fetchOwnerBookings("", 1);
+                fetchOwnerBookings(searchInput, 1);
             }
             else if(userRole === "Customer"){
-                fetchCustomerBookingData("", 1);
+                fetchCustomerBookingData(searchInput, 1);
             }
         }, 500);
 
         return () => clearTimeout(searchTimeOut);
-    }, [])
+    }, [searchInput])
 
     if(!isMounted){
         return null;
@@ -190,9 +192,19 @@ export default function MyBooking(){
             <Navbar/>
 
             <div className="flex justify-center mt-20">
-                <h1 className="text-4xl">
-                    My Booking
-                </h1>
+                <div className=" flex flex-col items-center">
+                    <h1 className="text-4xl">
+                        My Booking
+                    </h1>
+
+                    <input
+                    className="border-2 rounded-lg mt-5 p-3"
+                    placeholder="Search Place / Court"
+                    value={searchInput}
+                    onChange={(e) => setSerachInput(e.target.value)}
+                    />
+
+                </div>
             </div>
 
             <div className="mt-10 p-3">
@@ -219,7 +231,8 @@ export default function MyBooking(){
                             <th className="border-2 px-4 py-3">Court Number</th>
                             <th className="border-2 px-4 py-3">Date</th>
                             <th className="border-2 px-4 py-3">Start Time</th>
-                            <th className="border-2 px-4 py-3">End Timer</th>
+                            <th className="border-2 px-4 py-3">End Time</th>
+                            <th className="border-2 px-4 py-3">Status</th>
                         </tr>
                     </thead>
 
@@ -255,6 +268,7 @@ export default function MyBooking(){
                                         <td className="border-2 py-1 text-sm px-2">{booking.date.toString()}</td>
                                         <td className="border-2 py-1 text-sm px-2">{booking.startTime}</td>
                                         <td className="border-2 py-1 text-sm px-2">{booking.endTime}</td>
+                                        <td className="border-2 py-1 text-sm px-2">{booking.status}</td>
 
                                     </tr>
                                 );
