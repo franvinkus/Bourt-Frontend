@@ -5,6 +5,9 @@ export const API_URL = {
         Login: `${BASE_URL}/User/user-login`,
         Register: `${BASE_URL}/User/user-register`,
     },
+    USER:{
+        GetAll: `${BASE_URL}/User/user-get`,
+    },
     PLACE:{
         GetAll: `${BASE_URL}/Place/get-place`,
         GetDetail: (id: string) => `${BASE_URL}/Place/get-place/${id}`,

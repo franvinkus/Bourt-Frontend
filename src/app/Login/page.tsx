@@ -1,5 +1,6 @@
 "use client"
 
+import { getUserRole } from "@/utils/Auth";
 import { API_URL } from "@/utils/BackEndAPI";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -43,7 +44,21 @@ export default function Login() {
                 const token = await response.text();
                 console.log("Success",token);
                 localStorage.setItem("token", token);
-                router.push("/homepage");
+
+                const userRole = getUserRole();
+                const isAdmin = userRole === "Admin";
+                const isOwner = userRole === "Owner";
+                const isCustomer = userRole === "Customer";
+
+                if(isAdmin){
+                    router.push("/admin");
+                }
+                else if(isOwner){
+                    console.log("diem disini dlu");
+                }
+                else{
+                    router.push("/homepage");
+                }
             }
             else{
                 const errorData = await response.json();
