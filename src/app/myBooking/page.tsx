@@ -40,6 +40,9 @@ interface PagedModel{
 export default function MyBooking(){
     const isLogged = isLoggedIn();
     const userRole = getUserRole();
+    const isAdmin = userRole === "Admin";
+    const isOwner = userRole === "Owner";
+    const isCustomer = userRole === "Customer";
 
     const [isLoading, setIsLoading] = useState(false);
     const [pagedData, setPagedData] = useState<PagedModel>({
@@ -169,13 +172,13 @@ export default function MyBooking(){
         setIsMounted(true);
 
         const searchTimeOut = setTimeout(() => {
-            if(userRole === "Admin"){
+            if(isAdmin){
                 fetchAdminBookings(searchInput, 1);
             }
-            else if (userRole === "Owner"){
+            else if (isOwner){
                 fetchOwnerBookings(searchInput, 1);
             }
-            else if(userRole === "Customer"){
+            else if(isCustomer){
                 fetchCustomerBookingData(searchInput, 1);
             }
         }, 500);
@@ -212,19 +215,19 @@ export default function MyBooking(){
                     <thead className="bg-gray-100">
                         <tr>
                             <th className="border-2 px-4 py-3">Booking Id</th>
-                            {userRole === "Admin" && (
+                            {isAdmin && (
                                     <th className="border-2 px-4 py-3">User Id</th>
                             )}
-                            {(userRole === "Admin" || userRole === "Owner") && (
+                            {(isAdmin || isOwner) && (
                                     <th className="border-2 px-4 py-3">Username</th>
                             )}
-                            {userRole === "Admin" && (
+                            {isAdmin && (
                                 <>      
                                     <th className="border-2-300 px-4 py-3">Place Id</th>
                                 </>
                             )}
                             <th className="border-2 px-4 py-3">Place Name</th>
-                            {userRole === "Admin" && (
+                            {isAdmin && (
                                     <th className="border-2 px-4 py-3">Court Id</th>
                             )}
                             <th className="border-2 px-4 py-3">Court Name</th>
@@ -248,19 +251,19 @@ export default function MyBooking(){
                                     className="hover:bg-gray-50 transition-colors text-center"
                                     >
                                         <td className="border-2 py-1 text-sm px-2">{booking.bookingId}</td>
-                                        {userRole === "Admin" && (
+                                        {isAdmin && (
                                             <td className="border-2 py-1 text-sm px-2">{isAdmintData? booking.userId : "-"}</td> 
                                         )}
-                                        {(userRole === "Admin" || userRole === "Owner") && (
+                                        {(isAdmin || isOwner) && (
                                                 <td className="border-2 py-1 text-sm px-2">{hasUsername? booking.username : "-"}</td>
                                         )}
-                                        {userRole === "Admin" && (
+                                        {isAdmin && (
                                             <>
                                                 <td className="border-2 py-1 text-sm px-2">{isAdmintData? booking.placeId : "-"}</td>
                                             </>
                                         )}
                                         <td className="border-2 py-1 text-sm px-2">{booking.placeName}</td>
-                                        {userRole === "Admin" && (
+                                        {isAdmin && (
                                             <td className="border-2 py-1 text-sm px-2">{isAdmintData? booking.courtId : "-"}</td>
                                         )}
                                         <td className="border-2 py-1 text-sm px-2">{booking.courtName}</td>

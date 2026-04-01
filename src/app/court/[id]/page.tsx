@@ -40,6 +40,7 @@ export default function CourtDetail({ params }: {params : Promise<Params>}){
     const [isLogged, setIsLogged] = useState(false);
     const [userId, setUserId] = useState('');
     const [userRole, setUserRole] = useState('');
+    const isCustomer = userRole === "Customer";
 
     const [courtDetailData, setCourtDetailData] = useState<CourtDetail | null>(null);
     const [availableHours, setAvailableHours] = useState<AvailableHours[] | null>(null); 
@@ -199,7 +200,7 @@ export default function CourtDetail({ params }: {params : Promise<Params>}){
                 </section>
             )
         }
-        else if(userRole !== "Customer"){
+        else if(!isCustomer){
             return(
                 <div>
                     Hello
