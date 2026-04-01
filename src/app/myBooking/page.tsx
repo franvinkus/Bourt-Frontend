@@ -52,7 +52,7 @@ export default function MyBooking(){
         datas: []
     });
     const [isMounted, setIsMounted] = useState(false);
-    const [searchInput, setSerachInput] = useState('');
+    const [searchInput, setSearchInput] = useState('');
 
     const fetchCustomerBookingData = async (stringInput: string, pageNumber: number) => {
         setIsLoading(true);
@@ -204,7 +204,7 @@ export default function MyBooking(){
                     className="border-2 rounded-lg mt-5 p-3"
                     placeholder="Search Place / Court"
                     value={searchInput}
-                    onChange={(e) => setSerachInput(e.target.value)}
+                    onChange={(e) => setSearchInput(e.target.value)}
                     />
 
                 </div>
