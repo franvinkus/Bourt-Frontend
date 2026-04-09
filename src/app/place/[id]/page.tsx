@@ -6,6 +6,7 @@ import { isLoggedIn, getUserRole } from "@/utils/Auth";
 import { redirect } from 'next/navigation';
 import Navbar from "@/Component/Navbar";
 import Link from "next/link";
+import AddCourtModal from "@/Component/AddCourtModal";
 
 interface Place{
     name: string,
@@ -46,6 +47,12 @@ export default function placeDetail({ params }: {params : Promise<Params>}){
     const [searchCourt, setSearchCourt] = useState('');
     const [placeDetail, setPlaceDetail] = useState<Place | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+    const [addModal, setAddModal] = useState(false);
+
+    const userRole = getUserRole();
+    const isAdmin = userRole === "Admin";
+    const isOwner = userRole === "Owner";
 
     const fetchData = async (stringInput: string, pageNumber: number) => {
         setIsLoading(true);
@@ -78,6 +85,7 @@ export default function placeDetail({ params }: {params : Promise<Params>}){
     useEffect(() => {
         const searchTimeOut = setTimeout(() => {
             fetchData(searchCourt, 1);
+            setIsMounted(true);
         }, 1000);
 
         return () => clearTimeout(searchTimeOut);
@@ -89,9 +97,19 @@ export default function placeDetail({ params }: {params : Promise<Params>}){
         fetchData(searchCourt, pageNum);
     }
 
+    const handleAddCourtButton = () =>{
+        setAddModal(true);
+    }
+
     return(
         <div>
             <Navbar/>
+
+            <AddCourtModal
+            isOpen={addModal}
+            onClose={() => setAddModal(false)}
+            placeId={placeId}
+            />
 
             <div className="p-4">
                 <div className="flex items-start ml-10">
@@ -134,6 +152,17 @@ export default function placeDetail({ params }: {params : Promise<Params>}){
                             onChange={(e) => setSearchCourt(e.target.value)}
                             />
                         </div>
+
+                        {isMounted && isOwner && (
+                            <div className="flex justify-start ml-4 mt-2">
+                                <button
+                                className="border-2 p-2 rounded-lg text-lg bg-black text-white hover:bg-white hover:text-black hover:cursor-pointer"
+                                onClick={handleAddCourtButton}
+                                >
+                                + Add Court
+                                </button>
+                            </div>
+                        )}
 
                         <div className="flex flex-col">
                             <div className="w-250 grid grid-cols-4 p-4 gap-5 right-4">
@@ -189,15 +218,6 @@ export default function placeDetail({ params }: {params : Promise<Params>}){
                 </div>
 
             </div>
-            {/* {!isUserLoggedin ? (
-                <a href="/login"> login to book </a>
-            ) : role == "customer"? (
-                <div>
-                    book Now
-                </div>
-            ) : (
-                <p className="text-gray-400">Owner tidak bisa booking</p>
-            )} */}
             
         </div>
     );

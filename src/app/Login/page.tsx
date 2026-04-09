@@ -53,9 +53,6 @@ export default function Login() {
                 if(isAdmin){
                     router.push("/admin");
                 }
-                else if(isOwner){
-                    console.log("diem disini dlu");
-                }
                 else{
                     router.push("/homepage");
                 }
