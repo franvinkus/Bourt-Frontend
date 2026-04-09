@@ -1,6 +1,6 @@
 "use client"
 
-import { getUserName, isLoggedIn } from "@/utils/Auth";
+import { getUserName, getUserRole, isLoggedIn } from "@/utils/Auth";
 import { useEffect, useState } from "react";
 
 export default function Navbar(){
@@ -8,10 +8,17 @@ export default function Navbar(){
     const [isLogged, setIsLogged] = useState(false);
     const [username, setUserName] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
+    const userRole = getUserRole();
+    const isAdmin = userRole === "Admin";
+    const isOwner = userRole === "Owner";
+    const isCustomer = userRole === "Customer";
 
     useEffect(() => {
         setIsLogged(isLoggedIn());
         setUserName(getUserName());
+        setIsMounted(true);
     }, []);
 
     const handleModal = () =>{
@@ -26,19 +33,33 @@ export default function Navbar(){
             </div>
 
             <div className="flex justify-between items-center text-xl gap-15 mr-10">
-                <a 
-                className="hover:cursor-pointer" 
-                href="../homepage"
-                >
-                    Home
-                </a>
+                {isMounted && (
+                    <>
+                        {isAdmin ? (
+                            <a 
+                            className="hover:cursor-pointer" 
+                            href="../admin"
+                            >
+                                Home
+                            </a>
+                        ) : (
+                            <a 
+                            className="hover:cursor-pointer" 
+                            href="../homepage"
+                            >
+                                Home
+                            </a>
+                        )}
+                        
+                        <a 
+                        className="hover:cursor-pointer"
+                        href={`${isLogged ? "../myBooking" : "../login"}`}
+                        >
+                            My Booking
+                        </a>
+                    </>
+                )}
                 
-                <a 
-                className="hover:cursor-pointer"
-                href={`${isLogged ? "../myBooking" : "../login"}`}
-                >
-                    My Booking
-                </a>
             </div>
 
             {!isLogged? (
